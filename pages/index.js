@@ -1,38 +1,32 @@
-import Container from '../components/container'
-import MoreStories from '../components/more-stories'
-import HeroPost from '../components/hero-post'
-import Intro from '../components/intro'
-import Layout from '../components/layout'
-import { getAllPosts } from '../lib/api'
-import Head from 'next/head'
-import { CMS_NAME } from '../lib/constants'
+import { getAllPosts } from '../lib/api';
+import Head from 'next/head';
+import { CMS_NAME } from '../lib/constants';
 
 export default function Index({ allPosts }) {
-  const heroPost = allPosts[0]
-  const morePosts = allPosts.slice(1)
   return (
     <>
-      <Layout>
-        <Head>
-          <title>Next.js Blog Example with {CMS_NAME}</title>
-        </Head>
-        <Container>
-          <Intro />
-          {heroPost && (
-            <HeroPost
-              title={heroPost.title}
-              coverImage={heroPost.coverImage}
-              date={heroPost.date}
-              author={heroPost.author}
-              slug={heroPost.slug}
-              excerpt={heroPost.excerpt}
+      <Head>
+        <title>Next.js Blog Example with {CMS_NAME}</title>
+      </Head>
+      <div className='grid grid-cols-4 gap-16'>
+        <section className='col-span-3'>
+          <video width='100%' controls autoplay>
+            <source
+              src='https://www.w3schools.com/html/mov_bbb.mp4'
+              type='video/mp4'
             />
-          )}
-          {morePosts.length > 0 && <MoreStories posts={morePosts} />}
-        </Container>
-      </Layout>
+            <source
+              src='https://www.w3schools.com/html/mov_bbb.ogg'
+              type='video/ogg'
+            />
+          </video>
+        </section>
+        <section>
+          <article className='bg-orange-400 h-20'></article>
+        </section>
+      </div>
     </>
-  )
+  );
 }
 
 export async function getStaticProps() {
@@ -43,9 +37,9 @@ export async function getStaticProps() {
     'author',
     'coverImage',
     'excerpt',
-  ])
+  ]);
 
   return {
     props: { allPosts },
-  }
+  };
 }
