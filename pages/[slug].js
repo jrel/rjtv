@@ -49,16 +49,14 @@ export default function Page({ episode, onMobileNavOpen }) {
 
 export async function getStaticPaths() {
   const db = await database();
+  const paths = await db
+    .collection('videos')
+    .find({})
+    .map(({ slug }) => ({ params: { slug } }))
+    .toArray();
 
   return {
-    paths: await db
-      .collection('videos')
-      .find({})
-      .project({ slug: true })
-      .map((doc) => {
-        return { params: doc };
-      })
-      .toArray(),
+    paths,
     fallback: false,
   };
 }
@@ -68,14 +66,16 @@ export async function getStaticProps({ params }) {
 
   return {
     props: {
-      video: await db
-        .collection('videos')
-        .find({
-          slug: params.slug,
-        })
-        .project({ slug: true })
-        .map((doc = { params: doc }))
-        .toArray(),
+      video: JSON.parse(
+        JSON.stringify(
+          await db
+            .collection('videos')
+            .find({
+              slug: params.slug,
+            })
+            .toArray()
+        )
+      ),
     },
   };
 }
