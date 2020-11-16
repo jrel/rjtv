@@ -1,18 +1,37 @@
-import '../styles/index.css';
+import PropTypes from 'prop-types';
+import Head from 'next/head';
+import { ThemeProvider } from '@material-ui/core/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import theme from '../src/theme';
+import AppShell from '../src/components/app-shell';
 
-export default function MyApp({ Component, pageProps }) {
+export default function MyApp(props) {
+  const { Component, pageProps } = props;
+
+  React.useEffect(() => {
+    const jssStyles = document.querySelector('#jss-server-side');
+    if (jssStyles) {
+      jssStyles.parentElement.removeChild(jssStyles);
+    }
+  }, []);
   return (
     <>
-      <section className='flex-col md:flex-row flex items-center md:justify-between mt-10 mb-4'>
-        <h1 className='text-6xl md:text-8xl font-bold tracking-tighter leading-tight md:pr-8'>
-          RJTV.
-        </h1>
-      </section>
-      <Layout>
-        <Container>
-          <Component {...pageProps} />
-        </Container>
-      </Layout>
+      <Head>
+        <meta
+          name='viewport'
+          content='minimum-scale=1, initial-scale=1, width=device-width'
+        />
+      </Head>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <AppShell />
+        <Component {...pageProps} />
+      </ThemeProvider>
     </>
   );
 }
+
+MyApp.propTypes = {
+  Component: PropTypes.elementType.isRequired,
+  pageProps: PropTypes.object.isRequired,
+};
