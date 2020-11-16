@@ -1,3 +1,4 @@
+import database from '../src/config/database';
 import React from 'react';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 import TopBar from '../src/components/top-bar';
@@ -28,7 +29,7 @@ export default function Page({ episode, onMobileNavOpen }) {
 
   return (
     <div className={classes.root}>
-      <TopBar className={classes.topBar} back/>
+      <TopBar className={classes.topBar} back />
       <Card className={classes.card} elevation={0} raised>
         <CardMedia
           component='video'
@@ -47,25 +48,34 @@ export default function Page({ episode, onMobileNavOpen }) {
 }
 
 export async function getStaticPaths() {
+  const db = await database();
+  const paths = await db
+    .collection('videos')
+    .find({})
+    .map(({ slug }) => ({ params: { slug } }))
+    .toArray();
+
   return {
-    paths: [
-      { params: { slug: '1' } },
-      { params: { slug: '2' } },
-      { params: { slug: '3' } },
-    ],
-    fallback: true,
+    paths,
+    fallback: false,
   };
 }
 
-export function getStaticProps() {
+export async function getStaticProps({ params }) {
+  const db = await database();
+
   return {
     props: {
-      episode: {
-        slug: '1',
-        image: 'https://dummyimage.com/300/f0912b/000000.png',
-        title: 'teste1',
-        date: 'teste1',
-      },
+      video: JSON.parse(
+        JSON.stringify(
+          await db
+            .collection('videos')
+            .find({
+              slug: params.slug,
+            })
+            .toArray()
+        )
+      ),
     },
   };
 }

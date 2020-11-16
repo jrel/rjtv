@@ -5,6 +5,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
 import Link from 'next/link';
 import TopBar from '../src/components/top-bar';
+import database from '../src/config/database';
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -22,22 +23,18 @@ const useStyles = makeStyles((theme) =>
   })
 );
 
-export default function Page({ episodes }) {
+export default function Page({ videos }) {
   const classes = useStyles();
-
   return (
     <>
       <TopBar />
-      {episodes.map((episode) => (
+      {videos.map((episode) => (
         <Link href={episode.slug} key={episode.slug}>
           <Card className={classes.card} elevation={0} raised>
             <CardMedia
               className={classes.media}
               image={episode.image}
               title={episode.title}
-
-
-
             />
             <CardHeader
               avatar={<Avatar className={classes.avatar}>1</Avatar>}
@@ -51,29 +48,14 @@ export default function Page({ episodes }) {
   );
 }
 
-export function getStaticProps() {
+export async function getStaticProps() {
+  const db = await database();
+
   return {
     props: {
-      episodes: [
-        {
-          slug: '1',
-          image: 'https://dummyimage.com/300/f0912b/000000.png',
-          title: 'teste1',
-          date: 'teste1',
-        },
-        {
-          slug: '2',
-          image: 'https://dummyimage.com/300/f0912b/000000.png',
-          title: 'teste2',
-          date: 'teste2',
-        },
-        {
-          slug: '3',
-          image: 'https://dummyimage.com/300/f0912b/000000.png',
-          title: 'teste3',
-          date: 'teste3',
-        },
-      ],
+      videos: JSON.parse(
+        JSON.stringify(await db.collection('videos').find({}).toArray())
+      ),
     },
   };
 }

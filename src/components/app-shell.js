@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
     overflow: 'auto',
   },
 }));
-export default function ({ children, variant }) {
+export default function AppShell({ children, variant }) {
   const classes = useStyles();
   const [isMobileNavOpen, setMobileNavOpen] = useState(false);
 
