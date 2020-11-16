@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
 import {
   Avatar,
   Box,
@@ -130,16 +129,6 @@ const NavBar = ({ onMobileClose, openMobile }) => {
       </Hidden>
     </>
   );
-};
-
-NavBar.propTypes = {
-  onMobileClose: PropTypes.func,
-  openMobile: PropTypes.bool,
-};
-
-NavBar.defaultProps = {
-  onMobileClose: () => {},
-  openMobile: false,
 };
 
 export default NavBar;

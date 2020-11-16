@@ -1,6 +1,5 @@
 import React from 'react';
-import clsx from 'clsx';
-import PropTypes from 'prop-types';
+import cn from 'classnames';
 import { Button, ListItem, makeStyles } from '@material-ui/core';
 import Link from 'next/link';
 
@@ -40,11 +39,7 @@ const NavItem = ({ className, href, icon: Icon, title, ...rest }) => {
   const classes = useStyles();
 
   return (
-    <ListItem
-      className={clsx(classes.item, className)}
-      disableGutters
-      {...rest}
-    >
+    <ListItem className={cn(classes.item, className)} disableGutters {...rest}>
       <Button
         activeClassName={classes.active}
         className={classes.button}
@@ -56,13 +51,6 @@ const NavItem = ({ className, href, icon: Icon, title, ...rest }) => {
       </Button>
     </ListItem>
   );
-};
-
-NavItem.propTypes = {
-  className: PropTypes.string,
-  href: PropTypes.string,
-  icon: PropTypes.elementType,
-  title: PropTypes.string,
 };
 
 export default NavItem;

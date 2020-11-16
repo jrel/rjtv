@@ -8,17 +8,14 @@
   },
   "dependencies": {
     "@material-ui/core": "latest",
-    "@material-ui/icons": "^4.9.1",
-    "classnames": "2.2.6",
-    "clsx": "latest",
-    "next": "latest",
-    "prop-types": "latest",
-    "react": "latest",
-    "react-dom": "latest"
+    "@material-ui/icons": "latest",
+    "classnames": "^2.2.6",
+    "next": "^10.0.1-canary.7",
+    "react": "^16.14.0",
+    "react-dom": "^16.14.0"
   },
   "devDependencies": {
-    "postcss-preset-env": "^6.7.0",
-    "tailwindcss": "^1.4.0"
+    "postcss-preset-env": "^6.7.0"
   },
   "license": "MIT"
 }

@@ -1,5 +1,4 @@
-import clsx from 'clsx';
-import PropTypes from 'prop-types';
+import cn from 'classnames';
 import Link from 'next/link';
 import {
   AppBar,
@@ -23,7 +22,7 @@ const TopBar = ({ onMobileNavOpen, className, back, ...rest }) => {
   const classes = useStyles();
 
   return (
-    <AppBar className={clsx(classes.root, className)} {...rest}>
+    <AppBar className={cn(classes.root, className)} {...rest}>
       <Toolbar>
         <Hidden lgUp>
           {back ? (
